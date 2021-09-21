@@ -1,0 +1,19 @@
+{
+    "name": "nfpanel/common",
+    "description": "Biblioteca base para comunicaçao com a API do NFPanel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jefferson Moreira",
+            "email": "jeematheus@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "NFPanel\\Common\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
