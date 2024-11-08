@@ -308,6 +308,31 @@ class Tools
     }
 
     /**
+     * Função responsável por buscar um cliente no NFPanel
+     *
+     * @param array $params Parametros a serem passados
+     * @return \stdClass
+     */
+    public function buscaCliente(array $params = []) :\stdClass
+    {
+        try {
+            $response = $this->get('customer', $params);
+
+            if ($response['httpCode'] === 200) {
+                return $response['body'];
+            }
+
+            if (isset($response['body']->errors) && !empty($response['body']->errors)) {
+                throw new \Exception("\r\n".implode("\r\n", $response['body']->errors));
+            } else {
+                throw new \Exception(json_encode($response));
+            }
+        } catch (\Exception $error) {
+            throw $error;
+        }
+    }
+
+    /**
      * Função responsável por criar ou atualiar um Contador no NFPanel
      *
      * @param array $dados Dados do usuário
@@ -334,7 +359,7 @@ class Tools
             throw $error;
         }
     }
-    
+
     /**
      * Função responsável por criar um contrato com plano no NFPanel
      *
