@@ -769,6 +769,38 @@ class Tools
     }
 
     /**
+     * Função responsável por enviar a data de previsão para uma cobrança no NFPanel
+     *
+     * @param int $nfpanel_installment_id ID da Cobrança
+     * @param string $prevision_date Data de previsão
+     * @return \stdClass
+     */
+    public function enviaPrevisionDate(int $nfpanel_installment_id, string $prevision_date) :\stdClass
+    {
+        try {
+            if (empty($prevision_date) || empty($nfpanel_installment_id)) {
+                throw new \Exception('É necessário informar o ID da Cobrança e a Data de Previsão');
+            }
+
+            $response = $this->post("installments/{$nfpanel_installment_id}/prevision_date", [
+                'prevision_date' => $prevision_date
+            ]);
+
+            if ($response['httpCode'] == 200) {
+                return $response['body'];
+            }
+
+            if (isset($response['body']->errors) && !empty($response['body']->errors)) {
+                throw new \Exception("\r\n".implode("\r\n", $response['body']->errors));
+            } else {
+                throw new \Exception(json_encode($response));
+            }
+        } catch (\Exception $error) {
+            throw $error;
+        }
+    }
+
+    /**
      * Função responsável por remover um voto de cliente sobre uma sugestão
      *
      * @param int $suggestion_id ID da Sugestão
