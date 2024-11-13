@@ -316,7 +316,7 @@ class Tools
     public function buscaCliente(array $params = []) :\stdClass
     {
         try {
-            $response = $this->get('customer', $params);
+            $response = $this->post('customer', $params);
 
             if ($response['httpCode'] === 200) {
                 return $response['body'];
